@@ -22,7 +22,8 @@ jobs:
       - name: Extract Git tag
         id: extract_tag
         run: echo ::set-output name=TAG::${GITHUB_REF/refs\/tags\//}
-
+      - name: Extract Git tag
+        run: echo ${{ steps.extract_tag.outputs.TAG }}
       - name: Build Docker image
         run: docker build -t your-dockerhub-username/image-name:${{ steps.extract_tag.outputs.TAG }} .
 
