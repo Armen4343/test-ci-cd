@@ -3,8 +3,6 @@ on:
   push:
     tags:
       - 'v*'
-    branches:
-      - main
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,6 +11,9 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v2
 
+      - name: Copy .env.deployment to .env
+        run: cp .env.deployment .env
+        
       - name: Log into Docker Hub
         uses: docker/login-action@v1
         with:
@@ -22,19 +23,22 @@ jobs:
       - name: Extract Git tag
         id: extract_tag
         run: echo ::set-output name=TAG::${GITHUB_REF/refs\/tags\//}
-      - name: Extract Git tag
-        run: echo ${{ steps.extract_tag.outputs.TAG }}
+      
       - name: Build Docker image
-        run: docker build -t your-dockerhub-username/image-name:${{ steps.extract_tag.outputs.TAG }} .
+        run: docker build -t armensolicy/test-zeep:${{ steps.extract_tag.outputs.TAG }} .
 
       - name: Push Docker image to Docker Hub
-        run: docker push your-dockerhub-username/image-name:${{ steps.extract_tag.outputs.TAG }}
+        run: docker push armensolicy/test-zeep:${{ steps.extract_tag.outputs.TAG }}
         
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     needs: build
     steps:
+    - name: Extract Git tag
+      id: extract_tag
+      run: echo ::set-output name=TAG::${GITHUB_REF/refs\/tags\//}
+        
     - name: deploy to prod
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -43,5 +47,6 @@ jobs:
         password: testpassword
         port: 22
         script: |
+          docker pull armensolicy/test-zeep:${{ steps.extract_tag.outputs.TAG }}
           docker rm -f it_zeepup
-          docker run --name it_zeepup --restart always -d -p 8000:80 armensolicy/test-zeep:v1
+          docker run --name it_zeepup --restart always -d -p 8000:80 armensolicy/test-zeep:${{ steps.extract_tag.outputs.TAG }}
