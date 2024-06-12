@@ -1,0 +1,16 @@
+name: remote ssh command
+on: [push]
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: 51.77.202.140
+        username: knarik
+        password: XuiQ4z%71P>XsbRm
+        port: 22
+        script: su - ubuntu -c 'mkdir /home/ubuntu/bob'
