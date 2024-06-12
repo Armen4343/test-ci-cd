@@ -10,7 +10,7 @@ jobs:
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: 51.77.202.140
-        username: knarik
-        password: XuiQ4z%71P>XsbRm
+        username: github
+        password: testpassword
         port: 22
         script: mkdir bob
