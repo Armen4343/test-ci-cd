@@ -1,12 +1,39 @@
 name: remote ssh command
-on: [push]
+on:
+  push:
+    tags:
+      - 'v*'
+    #branches:
+    #  - main
 jobs:
-
   build:
-    name: Build
+    runs-on: ubuntu-latest
+    name: build docker image and push to registry
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Log into Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: armensolicy
+          password: armen333!
+
+      - name: Extract Git tag
+        id: extract_tag
+        run: echo ::set-output name=TAG::${GITHUB_REF/refs\/tags\//}
+
+      - name: Build Docker image
+        run: docker build -t your-dockerhub-username/image-name:${{ steps.extract_tag.outputs.TAG }} .
+
+      - name: Push Docker image to Docker Hub
+        run: docker push your-dockerhub-username/image-name:${{ steps.extract_tag.outputs.TAG }}
+        
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: executing remote ssh commands using password
+    - name: deploy to prod
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: 51.77.202.140
