@@ -13,4 +13,6 @@ jobs:
         username: github
         password: testpassword
         port: 22
-        script: mkdir bob
+        script: |
+          docker rm -f it_zeepup
+          docker run --name it_zeepup --restart always -d -p 8000:80 armensolicy/test-zeep:v1
