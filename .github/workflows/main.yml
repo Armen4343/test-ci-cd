@@ -13,4 +13,4 @@ jobs:
         username: knarik
         password: XuiQ4z%71P>XsbRm
         port: 22
-        script: su - ubuntu -c 'mkdir /home/ubuntu/bob'
+        script: mkdir bob
