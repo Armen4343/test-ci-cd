@@ -1,1 +1,24 @@
-df
+web secrets
+
+DOCKER_REGISTRY = armensolicy/it_zeepup
+DOCKERHUB_USERNAME = armensolicy
+DOCKERHUB_PASSWORD = armen333!
+SSH_HOST = 51.77.202.140
+SSH_HOST_USER = github
+SSH_HOST_USER_PASSWORD = testpassword
+SSH_PORT = 22
+
+
+DB_USER = it_zeepup
+DB_NAME = it_zeepup
+DB_PASSWORD = it_zeepup
+
+mobile secrets
+
+DOCKER_REGISTRY = armensolicy/mobile_zeepup
+DOCKERHUB_USERNAME = armensolicy
+DOCKERHUB_PASSWORD = armen333!
+SSH_HOST = 51.77.202.140
+SSH_HOST_USER = github
+SSH_HOST_USER_PASSWORD = testpassword
+SSH_PORT = 22

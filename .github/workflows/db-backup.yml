@@ -1,0 +1,23 @@
+name: Run database migration
+on:
+  workflow_dispatch:
+    
+jobs:   
+  migrate:
+    name: Take a backup from database and run migration
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: take a backup from db
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_HOST_USER }}
+        password: ${{ secrets.SSH_HOST_USER_PASSWORD }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          mysqldump -u ${{ secrets.DB_USER }} --database ${{ secrets.DB_NAME }} -p${{ secrets.DB_PASSWORD }} > db-backups/$(date +"%Y-%m-%d")-it_zeepup.sql
+          docker exec it_zeepup php artisan migrate || { echo "Migration failed, restoring database from backup..."; mysql -u ${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} ${{ secrets.DB_NAME }} < db-backups/$(date +"%Y-%m-%d")-it_zeepup.sql; exit 1; }
+
+
+
