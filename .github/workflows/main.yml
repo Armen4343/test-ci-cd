@@ -2,7 +2,7 @@ name: Build and Deploy
 on:
   push:
     tags:
-      - 'v?.?.?'
+      - 'v*.*.*'
 
 env:
   DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
