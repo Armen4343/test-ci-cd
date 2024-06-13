@@ -17,7 +17,7 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           mysqldump -u ${{ secrets.DB_USER }} --database ${{ secrets.DB_NAME }} -p${{ secrets.DB_PASSWORD }} > db-backups/$(date +"%Y-%m-%d)-it_zeepup.sql
-          docker exec it_zeepup php artisan migrate || { echo "Migration failed, restoring database from backup..."; mysql -u ${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} ${{ secrets.DB_NAME }} < db-backups/$(date +"%Y-%m-%d")-it_zeepup.sql; exit 1; }
+          docker exec it_zeepup php artisan migrate || { echo "Migration failed, restoring database from backup..."; mysql -u ${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} ${{ secrets.DB_NAME }} < db-backups/$(date +"%Y-%m-%d)-it_zeepup.sql; exit 1; }
 
 
 
