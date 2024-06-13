@@ -9,7 +9,7 @@ jobs:
     
     steps:
     - name: get timestamp
-      run: echo "TIMESTAMP=$(date +"%Y-%m-%d %H:%M")" >> $GITHUB_ENV
+      run: TIMESTAMP=$(date +"%Y-%m-%d %H:%M")" >> $GITHUB_ENV
     - name: take a backup from db
       uses: appleboy/ssh-action@v1.0.3
       with:
