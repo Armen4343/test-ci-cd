@@ -8,37 +8,9 @@ env:
   DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: build docker image and push to registry
-
-    steps:
-      - name: Check out the code
-        uses: actions/checkout@v2
-
-      - name: Copy .env.deployment to .env
-        run: cp .env.deployment .env
-        
-      - name: Log into Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-      - name: Extract Git tag
-        id: extract_tag
-        run: echo ::set-output name=TAG::${GITHUB_REF/refs\/tags\//}
-      
-      - name: Build Docker image
-        run: docker build -t "$DOCKER_REGISTRY":${{ steps.extract_tag.outputs.TAG }} .
-
-      - name: Push Docker image to Docker Hub
-        run: docker push "$DOCKER_REGISTRY":${{ steps.extract_tag.outputs.TAG }}
-        
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    needs: build
 
     steps:
     - name: Extract Git tag
