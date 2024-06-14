@@ -16,6 +16,9 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v2
 
+      - name: Enter root folder
+        run: cd httpdocs/
+        
       - name: Copy .env.deployment to .env
         run: cp .env.deployment .env
         
@@ -53,6 +56,10 @@ jobs:
         password: ${{ secrets.SSH_HOST_USER_PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          docker pull "$DOCKER_REGISTRY":${{ steps.extract_tag.outputs.TAG }}
-          docker rm -f it_zeepup || true
-          docker run --name it_zeepup --restart always -d -p 8000:80 "$DOCKER_REGISTRY":${{ steps.extract_tag.outputs.TAG }}
+          docker pull "${{ secrets.DOCKER_REGISTRY }}:${{ steps.extract_tag.outputs.TAG }}"
+          
+          if docker ps -a --format '{{.Names}}' | grep -w it_zeepup > /dev/null; then
+          docker rm -f it_zeepup
+          fi
+          
+          docker run --name it_zeepup --restart always -d -p 8000:80 "${{ secrets.DOCKER_REGISTRY }}:${{ steps.extract_tag.outputs.TAG }}"

@@ -1,4 +1,4 @@
-web secrets
+Github Actions Secrets
 
 DOCKER_REGISTRY = armensolicy/it_zeepup
 DOCKERHUB_USERNAME = armensolicy
