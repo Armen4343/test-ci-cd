@@ -25,17 +25,13 @@ jobs:
         password: ${{ secrets.SSH_HOST_USER_PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          echo "DOCKER_REGISTRY is set to: ${{ secrets.DOCKER_REGISTRY }}"
-          echo "DOCKER_REGISTRY is set to: $DOCKER_REGISTRY"
-          echo "bobbobo"
-          echo "$DOCKER_REGISTRY:${{ steps.extract_tag.outputs.TAG }}"
-          docker pull "$DOCKER_REGISTRY:${{ steps.extract_tag.outputs.TAG }}"
+          docker pull "${{ secrets.DOCKER_REGISTRY }}:${{ steps.extract_tag.outputs.TAG }}"
 
           if docker ps -a --format '{{.Names}}' | grep -w mobile_zeepup > /dev/null; then
           docker rm -f mobile_zeepup
           fi
 
-          docker run --name mobile_zeepup --restart always -d -p 8080:80 "$DOCKER_REGISTRY:${{ steps.extract_tag.outputs.TAG }}"
+          docker run --name mobile_zeepup --restart always -d -p 8080:80 "${{ secrets.DOCKER_REGISTRY }}:${{ steps.extract_tag.outputs.TAG }}"
 
 
          # docker pull "$DOCKER_REGISTRY":v0.0.1
