@@ -28,8 +28,8 @@ jobs:
           docker pull "armensolicy/mobile_zeepup:${{ steps.extract_tag.outputs.TAG }}
           CONTAINER_NAME="mobile_zeepup"
 
-          if docker ps -a --format '{{.Names}}' | grep -w "$CONTAINER_NAME" > /dev/null; then
+          if docker ps -a --format '{{.Names}}' | grep -w mobile_zeepup > /dev/null; then
           docker rm -f mobile_zeepup
           fi
-          
+
           docker run --name mobile_zeepup --restart always -d -p 8000:80 armensolicy/mobile_zeepup:${{ steps.extract_tag.outputs.TAG }}
