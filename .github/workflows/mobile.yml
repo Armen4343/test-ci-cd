@@ -26,5 +26,5 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           docker pull "$DOCKER_REGISTRY":${{ steps.extract_tag.outputs.TAG }}
-          docker rm -f mobile_zeepup
+          docker rm -f mobile_zeepup || true
           docker run --name mobile_zeepup --restart always -d -p 8000:80 "$DOCKER_REGISTRY":${{ steps.extract_tag.outputs.TAG }}
