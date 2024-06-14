@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
     && mkdir -p framework/views \
     && mkdir -p framework/cache \
     && chmod -R 775 framework
-    
+
 RUN curl -sLS https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g npm \
@@ -38,5 +38,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN mkdir -p bootstrap/cache && chmod -R 777 bootstrap/
 
-RUN composer install --no-cache \
-    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN composer install --no-cache
+
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
