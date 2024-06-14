@@ -63,10 +63,6 @@ yarn-error.log*
 /public/mix-manifest.json
 /public/hot
 /public/storage
-/storage/framework/cache/data
-/storage/logs
-/storage/framework/sessions
-/storage/framework/views
 
 # Ignore Vite config
 vite.config.js
