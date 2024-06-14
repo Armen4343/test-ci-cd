@@ -18,7 +18,13 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql zip \
     && sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf \
-    && chmod -R 755 storage 
+    && chmod -R 755 storage \
+    && mkdir -p bootstrap/cache && chmod -R 777 bootstrap/ \
+    && mkdir -p framework/sessions \
+    && mkdir -p framework/views \
+    && mkdir -p framework/cache \
+    && chmod -R 775 framework
+    
 RUN curl -sLS https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g npm \
