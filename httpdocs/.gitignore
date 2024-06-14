@@ -26,7 +26,6 @@ composer.lock
 *.sql
 
 # Ignore runtime-generated files
-storage/
 bootstrap/cache/
 
 # Ignore specific files
