@@ -15,12 +15,9 @@ jobs:
     steps:
       - name: Check out the code
         uses: actions/checkout@v2
-
-      - name: Enter root folder
-        run: cd httpdocs/
         
       - name: Copy .env.deployment to .env
-        run: cp .env.deployment .env
+        run: cp httpdocs/.env.deployment cd httpdocs/.env
         
       - name: Log into Docker Hub
         uses: docker/login-action@v1
@@ -33,7 +30,7 @@ jobs:
         run: echo ::set-output name=TAG::${GITHUB_REF/refs\/tags\//}
       
       - name: Build Docker image
-        run: docker build -t "$DOCKER_REGISTRY":${{ steps.extract_tag.outputs.TAG }} .
+        run: docker build -t "$DOCKER_REGISTRY":${{ steps.extract_tag.outputs.TAG }} httpdocs/Dockerfile
 
       - name: Push Docker image to Docker Hub
         run: docker push "$DOCKER_REGISTRY":${{ steps.extract_tag.outputs.TAG }}
@@ -61,5 +58,5 @@ jobs:
           if docker ps -a --format '{{.Names}}' | grep -w it_zeepup > /dev/null; then
           docker rm -f it_zeepup
           fi
-          
+
           docker run --name it_zeepup --restart always -d -p 8000:80 "${{ secrets.DOCKER_REGISTRY }}:${{ steps.extract_tag.outputs.TAG }}"
