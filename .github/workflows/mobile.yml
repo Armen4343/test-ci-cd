@@ -32,4 +32,4 @@ jobs:
           docker rm -f mobile_zeepup
           fi
 
-          docker run --name mobile_zeepup --restart always -d -p 8000:80 armensolicy/mobile_zeepup:${{ steps.extract_tag.outputs.TAG }}
+          docker run --name mobile_zeepup --restart always -d -p 8080:80 armensolicy/mobile_zeepup:${{ steps.extract_tag.outputs.TAG }}
