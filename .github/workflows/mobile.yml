@@ -26,5 +26,9 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           docker pull "$DOCKER_REGISTRY":${{ steps.extract_tag.outputs.TAG }}
-          docker rm -f mobile_zeepup || true
+          CONTAINER_NAME="mobile_zeepup"
+
+          if docker ps -a --format '{{.Names}}' | grep -w "$CONTAINER_NAME" > /dev/null; then
+          docker rm -f "$CONTAINER_NAME"
+          fi
           docker run --name mobile_zeepup --restart always -d -p 8000:80 "$DOCKER_REGISTRY":${{ steps.extract_tag.outputs.TAG }}
