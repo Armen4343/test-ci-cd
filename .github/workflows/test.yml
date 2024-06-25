@@ -21,8 +21,10 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           export IMAGE_NAME="${{ secrets.DOCKER_REGISTRY }}:v${{ github.event.inputs.version }}"
-          
+
+          set -e
           docker pull "$IMAGE_NAME"
+          set +e
 
           if docker ps -a --format '{{.Names}}' | grep -w mobile_zeepup > /dev/null; then
           docker rm -f mobile_zeepup
