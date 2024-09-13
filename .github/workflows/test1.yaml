@@ -8,9 +8,11 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Run SOOS SAST Scan
-        uses: soos-io/soos-sast-github-action@v1
+        uses: soos-io/soos-dast-github-action@v2
         with:
           client_id: "gr6q5mzxc"
           api_key: "NGQ3YmE0NWQtNzc3ZS00N2ZlLTgyZDktMGVhOTlhNDk2YzM3"
-          project_name: "test-ci-cd
-"
+          project_name: "test-ci-cd"
+          scan_mode: "baseline"
+          api_url: "https://api.soos.io/api/"
+          target_url: "https://it.zeepup.com"
