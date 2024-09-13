@@ -13,6 +13,6 @@ jobs:
           client_id: "gr6q5mzxc"
           api_key: "NGQ3YmE0NWQtNzc3ZS00N2ZlLTgyZDktMGVhOTlhNDk2YzM3"
           project_name: "xsss"
-          scan_mode: "baseline"
+          scan_mode: "apiscan"
           api_url: "https://api.soos.io/api/"
           target_url: "https://token-creation-api.solicy.net/"
