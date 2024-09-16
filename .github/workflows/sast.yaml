@@ -1,0 +1,14 @@
+on: [push]
+
+jobs:
+  soos_sast_scan:
+    name: SOOS SAST Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run SOOS SAST Scan
+        uses: soos-io/soos-sast-github-action@v1
+        with:
+          client_id: "gr6q5mzxc"
+          api_key: "NGQ3YmE0NWQtNzc3ZS00N2ZlLTgyZDktMGVhOTlhNDk2YzM3"
+          project_name: "sast"
