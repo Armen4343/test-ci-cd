@@ -13,3 +13,26 @@ jobs:
           api_key: "NGQ3YmE0NWQtNzc3ZS00N2ZlLTgyZDktMGVhOTlhNDk2YzM3"
           project_name: "sast"
       
+  soos-sca-analysis:
+    name: SOOS SCA Scan
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Run SOOS Scan
+      uses: soos-io/soos-sca-github-action@v2
+      with:
+        client_id: "gr6q5mzxc"
+        api_key: "NGQ3YmE0NWQtNzc3ZS00N2ZlLTgyZDktMGVhOTlhNDk2YzM3"
+        project_name: "test-ci-cd"
+        
+  soos_dast_scan:
+    name: SOOS DAST Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run SOOS DAST Scan
+        uses: soos-io/soos-dast-github-action@v2
+        with:
+          client_id: "gr6q5mzxc"
+          api_key: "NGQ3YmE0NWQtNzc3ZS00N2ZlLTgyZDktMGVhOTlhNDk2YzM3"
+          project_name: "2test"
+          target_url: "https://it.zeepup.com"
