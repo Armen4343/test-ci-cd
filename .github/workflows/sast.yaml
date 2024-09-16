@@ -6,9 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: touch sast.sarif.json
       - name: Run SOOS SAST Scan
         uses: soos-io/soos-sast-github-action@v1
         with:
           client_id: "gr6q5mzxc"
           api_key: "NGQ3YmE0NWQtNzc3ZS00N2ZlLTgyZDktMGVhOTlhNDk2YzM3"
           project_name: "sast"
+      
